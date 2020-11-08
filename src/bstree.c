@@ -142,6 +142,56 @@ void inorder(tn * root, Type type) {
   //puts("");
 }
 
+// iterative way to get an array of all elements in a tree
+void search_index(tn * root, Type type, char ** arr, int * len) {
+  tn * stack[STACK_SIZE];
+  int top = -1, i = 0;
+  // not empty tree
+  if (root != NULL) {
+    ++top;
+    stack[top] = root; // push the root into stack
+    // check left child
+    root = root -> left;
+    while (top >= 0) { // to keep pushing & poping out nodes until empty stack
+
+      while (root != NULL) { // loop through left children to push them to stack
+        ++top; //
+        stack[top] = root; // push into stack
+        // check left side
+        root = root -> left; // go to next left child
+      }
+
+      root = stack[top]; // pop
+      --top;
+      switch (type) {
+      case INT:
+        arr[i] = (char * ) malloc(sizeof(char) * STRLEN);
+        snprintf(arr[i], STRLEN, "%d", root -> value._int); // found // safer than sprintf
+        break;
+      case FLOAT:
+        arr[i] = (char * ) malloc(sizeof(char) * STRLEN);
+        snprintf(arr[i], STRLEN, "%.2f", root -> value._float);
+        break;
+      case STR:
+        arr[i] = (char * ) malloc(sizeof(char) * STRLEN);
+        snprintf(arr[i], STRLEN, "%s", root -> value._str);
+        break;
+      }
+      * len = * len + 1;
+      ++i;
+      root = root -> right; // go right
+
+      // pushing the right children into stack
+      if (root != NULL) {
+        ++top;
+        stack[top] = root;
+        root = root -> left;
+      }
+    }
+  }
+  //return len;
+}
+
 tn * search_tree(tn * root, Tuple value, Type type) {
   tn * tree; // temporary tree to traverse the tree
   tree = root; // to keep track of the root node
@@ -206,8 +256,8 @@ void delete_node(tn ** root, Tuple key, Type type, int * filled) {
       } else {
         // it is the root
         free(to_be_deleted);
-		* filled = * filled - 1;
-		* root = NULL;
+        * filled = * filled - 1;
+        * root = NULL;
         return;
       }
     }

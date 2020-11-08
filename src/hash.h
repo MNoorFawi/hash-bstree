@@ -27,6 +27,7 @@ void printhash(ht * table, int size);
 int filled_indices(ht * table);
 int len(ht * table);
 int get_indx(ht * table, Tuple value);
+int indx_to_array(ht * table, int ind, char ** arr);
 
 // combining the hash functions into one function like macro that accepts multiple types
 #define hash_func(x, y)\

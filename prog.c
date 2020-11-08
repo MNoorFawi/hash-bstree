@@ -6,6 +6,7 @@
 #define TABLE_SIZE 10
 
 int main() {
+  puts("\nstarting with an empty table");
   ht * table = hash_init(TABLE_SIZE, 0);
   int i;
   Tuple t;
@@ -18,11 +19,11 @@ int main() {
     12,
     94
   };
-  for (i = 0; i < 7; ++i){
-	  t = int_in(arr[i]);
+  for (i = 0; i < 7; ++i) {
+    t = int_in(arr[i]);
     insert(table, t);
   }
-  puts("table now is not empty:");
+  puts("\ntable now is not empty:");
   print_hash(table);
   puts("");
   puts("try now to search for and delete some values: (0 means False while 1 is True)");
@@ -30,10 +31,10 @@ int main() {
   printf("search for value 11 --> %d \n", val_search(table, int_in(11)));
   printf("search by index 1 --> value %s found\n", search_by_index(table, 1));
   printf("table size --> %d while filled buckets --> %d\n", len(table), filled_indices(table));
-  printf("remove value 13 -->\n"); 
+  printf("remove value 13 -->\n");
   delete_val(table, int_in(13));
   printf("search again for value 13 --> %d \n", val_search(table, int_in(13)));
-  printf("try again to remove value 13 -->\n"); 
+  printf("try again to remove value 13 -->\n");
   delete_val(table, int_in(13));
   puts("\nprint the table after the deletion");
   print_hash(table);
@@ -43,6 +44,12 @@ int main() {
   insert(table, int_in(4));
   print_hash(table);
   printf("\ntable size --> %d while filled buckets --> %d\n", len(table), filled_indices(table));
+  puts("\nretrieve all elements in index 4");
+  char ** arrx = (char ** ) malloc(sizeof(char * ) * STRLEN);
+  int length = indx_to_array(table, 4, arrx);
+  for (i = 0; i < length; ++i)
+    printf("%s ", arrx[i]);
+  puts("\n");
   printf("index where value 22 exists is --> %d\n", get_indx(table, int_in(22)));
   printf("\nsearch by index 4 --> value %s is found \n\n", search_by_index(table, 4));
   printf("remove value 91 -->\n");

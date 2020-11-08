@@ -36,6 +36,7 @@ int compare(tn * x, tn * y, Type type);
 int compare2(tn * x, Tuple y, Type type, char op);
 void insert_node(tn ** root, tn * _new, Type type);
 void inorder(tn * root, Type type);
+void search_index(tn * root, Type type, char ** arr, int * len);
 tn * search_tree(tn * root, Tuple value, Type type);
 tn * get_ptr(tn * root, Tuple key, tn ** root_ptr, Type type);
 void delete_node(tn ** root, Tuple key, Type type, int * filled);

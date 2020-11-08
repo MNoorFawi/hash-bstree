@@ -37,6 +37,8 @@ export LD_LIBRARY_PATH=D_LIBRARY_PATH:./libs
 ```bash
 ./prog
 
+starting with an empty table
+
 table now is not empty:
 
 index(0):
@@ -89,6 +91,10 @@ index(8):
 index(9): 19 ->
 
 table size --> 10 while filled buckets --> 4
+
+retrieve all elements in index 4
+4 94
+
 index where value 22 exists is --> 2
 
 search by index 4 --> value 94 is found

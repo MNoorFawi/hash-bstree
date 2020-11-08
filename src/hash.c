@@ -85,22 +85,22 @@ void insert(ht * table, Tuple value) {
   int index;
   switch (value.type) { // depends on type of input
   case INT:
-    index = hash_func_int(value.val._int, table -> size); // create index for given value
+    index = hash_func(value.val._int, table -> size); // create index for given value
     temp -> value._int = value.val._int; // insert the value in the slot
     break;
   case FLOAT:
-    index = hash_func_float(value.val._float, table -> size);
+    index = hash_func(value.val._float, table -> size);
     temp -> value._float = value.val._float;
     break;
   case STR:
-    index = hash_func_str(value.val._str, table -> size);
+    index = hash_func(value.val._str, table -> size);
     strcpy(temp -> value._str, value.val._str);
     break;
   }
 
   if (table -> slot_array[index] == NULL) // an empty index is filled
     table -> filled++;
-  insert_node(&table->slot_array[index], temp, table -> type);
+  insert_node( & table -> slot_array[index], temp, table -> type);
   /* the index now contains the new value struct
   which is pointing to its neighbor in the index chain */
 }
@@ -110,16 +110,16 @@ int val_search(ht * table, Tuple value) {
   int index;
   switch (value.type) {
   case INT:
-    index = hash_func_int(value.val._int, table -> size); // find index of that value
+    index = hash_func(value.val._int, table -> size); // find index of that value
     break;
   case FLOAT:
-    index = hash_func_float(value.val._float, table -> size);
+    index = hash_func(value.val._float, table -> size);
     break;
   case STR:
-    index = hash_func_str(value.val._str, table -> size);
+    index = hash_func(value.val._str, table -> size);
     break;
   }
-  slot = search_tree(table -> slot_array[index], value, table->type); // the chain containing the value
+  slot = search_tree(table -> slot_array[index], value, table -> type); // the chain containing the value
   return !(slot == NULL); // 1 (true) if found 0 (false) if not
 }
 
@@ -128,8 +128,7 @@ returning a char * to make it easy to return any type (for now) */
 char * search_by_index(ht * table, int ind) {
   tn * slot;
   static char res[STRLEN];
-  int index = hash_func_int(ind, table -> size);
-  slot = table -> slot_array[index];
+  slot = table -> slot_array[ind];
   if (slot) { // not NULL
     switch (table -> type) {
     case INT:
@@ -152,18 +151,18 @@ void delete_val(ht * table, Tuple value) {
   int index;
   switch (table -> type) {
   case INT:
-    index = hash_func_int(value.val._int, table -> size); // get index of given value
-	break;
+    index = hash_func(value.val._int, table -> size); // get index of given value
+    break;
 
   case FLOAT:
-    index = hash_func_float(value.val._float, table -> size);
-	break;
+    index = hash_func(value.val._float, table -> size);
+    break;
 
   case STR:
-    index = hash_func_str(value.val._str, table -> size);
-	break;
+    index = hash_func(value.val._str, table -> size);
+    break;
   }
-  delete_node(&table -> slot_array[index], value, table -> type, &table->filled);
+  delete_node( & table -> slot_array[index], value, table -> type, & table -> filled);
 }
 
 void printhash(ht * table, int size) {
@@ -171,7 +170,7 @@ void printhash(ht * table, int size) {
   for (i = 0; i < size; ++i) {
     printf("\nindex(%d): ", i);
     tn * val = table -> slot_array[i];
-    inorder(val, table->type);
+    inorder(val, table -> type);
   }
   puts("");
 }
@@ -194,16 +193,23 @@ int get_indx(ht * table, Tuple value) {
   if (val_search(table, value)) {
     switch (table -> type) {
     case INT:
-      index = hash_func_int(value.val._int, table -> size);
+      index = hash_func(value.val._int, table -> size);
       return index;
     case FLOAT:
-      index = hash_func_float(value.val._float, table -> size);
+      index = hash_func(value.val._float, table -> size);
       return index;
     case STR:
-      index = hash_func_str(value.val._str, table -> size);
+      index = hash_func(value.val._str, table -> size);
       return index;
     }
   } else {
     return -1;
   }
+}
+
+int indx_to_array(ht * table, int ind, char ** arr) {
+  int i = 0;
+  tn * node = table -> slot_array[ind];
+  search_index(node, table -> type, arr, & i);
+  return i;
 }
