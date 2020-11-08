@@ -13,5 +13,5 @@ clean:
 	rm ./src/*.o
 	
 buildexe:
-	gcc prog.c -L./libs -lbstree -lhash -o prog
+	gcc prog.c -L./libs -lhash -o prog -Wl,-rpath,./libs
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./libs
