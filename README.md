@@ -10,7 +10,7 @@ The first library, **bstree.so**, includes the binary search tree data structure
 
 Accompanied an example program to demonstrate the functionalities.
 
-**The data structures accept int, float and char* data types.** 
+### The data structures accept int, float and char* data types.
 
 #### Build the libraries:
 ```bash
